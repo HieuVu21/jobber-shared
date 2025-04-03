@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
 import { NotAuthorizeError } from './error-handler';
-
+import { Request, Response, NextFunction } from 'express';
 const tokens: string[] = [
   'auth',
   'gig',
