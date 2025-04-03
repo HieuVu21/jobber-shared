@@ -4,7 +4,7 @@
   "main": "index.js",
   "description": "Helpers library for Jobber app",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "scripts": {
     "build": "npm run build:cjs && npm run build:esm && tsc --outDir build/src && node scripts/build-package.js",
@@ -22,7 +22,7 @@
   "author": "",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/HieuVu21/jobber-shared.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
@@ -39,9 +39,17 @@
   },
   "types": "./src/index.d.ts",
   "dependencies": {
-    "express": "^4.21.2"
+    "@elastic/elasticsearch": "^8.17.1",
+    "cloudinary": "^2.6.0",
+    "express": "^4.21.2",
+    "http-status": "^2.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.1",
+    "winston": "^3.17.0",
+    "winston-elasticsearch": "^0.19.0"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.13.14",
     "typescript": "^5.8.2"
   }
