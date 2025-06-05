@@ -6,8 +6,8 @@
     "allowSyntheticDefaultImports": true,
     "importHelpers": true,
     "jsx": "react-jsx",
-    "lib": ["dom", "esnext"],
-    "module": "esnext",
+    "lib": ["dom", "ES2015"],
+    "module": "CommonJS",
     "moduleResolution": "node",
     "noEmitOnError": true,
     "outDir": "build",
@@ -20,6 +20,6 @@
     "pretty": true,
     "resolveJsonModule": true,
   },
-  "include": ["src", "scripts/babel-preset.js"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

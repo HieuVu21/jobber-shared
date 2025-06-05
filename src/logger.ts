@@ -1,5 +1,4 @@
-import { json } from 'stream/consumers';
-import winston, { Logger, loggers } from 'winston';
+import winston from 'winston';
 import {
   TransformedData,
   LogData,
@@ -15,33 +14,34 @@ export const winstonLogger = (
   elasticsearchNode: string,
   name: string,
   level: string
-): Logger => {
-  const Opts = {
-    console: {
-      level,
-      handlerExceptions: true,
-      json: false,
-      colorize: true,
+) => {
+  const consoleTransport = new winston.transports.Console({
+    level,
+    handleExceptions: true,
+    format: winston.format.combine(
+      winston.format.colorize(),
+      winston.format.simple()
+    ),
+  });
+
+  const esTransport: ElasticsearchTransport = new ElasticsearchTransport({
+    level,
+    transformer: esTransformer,
+    clientOpts: {
+      node: elasticsearchNode,
+      maxRetries: 2,
+      requestTimeout: 10000,
+      sniffOnStart: false,
     },
-    elasticsearch: {
-      level,
-      Transformer: esTransformer,
-      clientOpts: {
-        node: elasticsearchNode,
-        log: level,
-        maxRetries: 2,
-        requestTimeout:10000,
-        sniffOnStart: false
-      },
-    },
-  };
-  const esTransport:  ElasticsearchTransport = new ElasticsearchTransport(Opts.elasticsearch)
-  const logger : Logger = winston.createLogger({
+  });
+
+  const logger  = winston.createLogger({
     exitOnError: false,
-    defaultMeta:{
-        service: name,
+    defaultMeta: {
+      service: name,
     },
-    transports: [new winston.transports.Console(Opts.console), esTransport]
-  })
-  return logger
+    transports: [consoleTransport, esTransport],
+  });
+
+  return logger;
 };
